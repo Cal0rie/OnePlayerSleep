@@ -1,0 +1,7 @@
+name: OnePlayerSleep
+version: 0.0.1-beta
+main: ink.beibeil.testplugin.ExamplePlugin
+description: An example plugin
+author: PaperMC
+website: https://papermc.io
+api-version: 1.19
