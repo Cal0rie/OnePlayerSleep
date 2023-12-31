@@ -2,23 +2,27 @@ package ink.beibeil.testplugin;
 
 import ink.beibeil.testplugin.utils.HexCodeUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.function.Supplier;
-
 public class ExamplePlugin extends JavaPlugin implements Listener {
+    FileConfiguration config = getConfig();
 //    private List<Player> sleepingPlayers;
 
     @Override
     public void onEnable() {
+        // 创建并保存配置文件
+        config.addDefault("enter-message-rewrite", false);
+        config.addDefault("enabled", true);
+        config.addDefault("fall-asleep-time", 60);
+
+        config.options().copyDefaults(true);
+        saveConfig();
+
         getServer().getPluginManager().registerEvents(this, this);
         getLogger().info("睡觉插件启动，Made by Cal0rie!");
     }
@@ -27,15 +31,20 @@ public class ExamplePlugin extends JavaPlugin implements Listener {
     // 玩家加入游戏
     public void onPlayerJoin(org.bukkit.event.player.PlayerJoinEvent event) {
         // 修改玩家加入提示
+        if (!config.getBoolean("enter-message-rewrite")) return;
         event.setJoinMessage("玩家 " + HexCodeUtils.playerString(event.getPlayer().getName()) + " ，启动!");
     }
 
     @EventHandler
     public void PlayerBedEnter(PlayerBedEnterEvent event) {
+        if(!config.getBoolean("enabled"))   return;
+
         // 判断是否睡着
         if (event.getBedEnterResult() == PlayerBedEnterEvent.BedEnterResult.OK) {
             Bukkit.broadcastMessage("玩家 " + HexCodeUtils.playerString(event.getPlayer().getName()) + " 要睡觉了!");
             BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
+            long time = config.getLong("fall-asleep-time");
+
             scheduler.scheduleSyncDelayedTask(this, new Runnable() {
                 @Override
                 public void run() {
@@ -49,7 +58,7 @@ public class ExamplePlugin extends JavaPlugin implements Listener {
                         getLogger().info(e.getMessage());
                     }
                 }
-            }, 60L);
+            }, time);
 
         }
     }
