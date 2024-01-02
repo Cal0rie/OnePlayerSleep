@@ -3,7 +3,7 @@ plugins {
     id("xyz.jpenilla.run-paper") version "2.2.2"
 }
 group = "ink.beibeil"
-version = "0.1.0-SNAPSHOT"
+version = "0.1.1-SNAPSHOT"
 repositories {
     mavenCentral()
     maven("https://repo.papermc.io/repository/maven-public/")

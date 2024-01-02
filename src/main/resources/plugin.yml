@@ -1,5 +1,5 @@
 name: OnePlayerSleep
-version: 0.0.1-beta
+version: 0.1.1-beta
 main: ink.beibeil.testplugin.ExamplePlugin
 description: An example plugin
 author: PaperMC

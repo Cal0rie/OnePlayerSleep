@@ -29,6 +29,12 @@ public class ExamplePlugin extends JavaPlugin implements Listener {
         // 跳过黑夜所需的玩家百分比
         config.addDefault("skip-percent", 50);
 
+        // 是否在睡眠的同时把天气改为晴朗，默认关闭
+        config.addDefault("change-weather", false);
+
+        // 晴朗天气持续时间，相当于/weather clear xxx，单位为tick
+        config.addDefault("clear-weather-time", 10000);
+
         config.options().copyDefaults(true);
         saveConfig();
 
@@ -81,6 +87,7 @@ public class ExamplePlugin extends JavaPlugin implements Listener {
                             String s = "&b天要亮啦~";
                             Bukkit.broadcastMessage(HexCodeUtils.stringWithColor(s));
                             event.getBed().getWorld().setTime(100L);
+                            if(config.getBoolean("change-weather")) event.getBed().getWorld().setClearWeatherDuration(config.getInt("clear-weather-time"));
                         }
 
                         // 若开启一人眠模式
@@ -90,6 +97,7 @@ public class ExamplePlugin extends JavaPlugin implements Listener {
                             String s = "玩家 " + HexCodeUtils.playerString(event.getPlayer().getName()) + " 睡着了，天要亮啦~";
                             Bukkit.broadcastMessage(HexCodeUtils.stringWithColor(s));
                             event.getBed().getWorld().setTime(100L);
+                            if(config.getBoolean("change-weather")) event.getBed().getWorld().setClearWeatherDuration(config.getInt("clear-weather-time"));
                         } catch (Exception ignored) {
                         }
                     }
