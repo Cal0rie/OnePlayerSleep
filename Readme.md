@@ -25,6 +25,12 @@ skip-percent: 50
 
 # 是否启用一人眠模式，该模式忽略百分比设置，一人睡觉即可跳过黑夜
 one-player-mode: false
+
+# 是否在睡眠的同时把天气改为晴朗，默认关闭
+change-weather: false
+
+# 晴朗天气持续时间，相当于/weather clear xxx，单位为tick
+clear-weather-time: 10000
 ```
 
 ## 指令和权限
