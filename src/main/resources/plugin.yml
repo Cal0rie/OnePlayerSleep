@@ -5,3 +5,14 @@ description: An example plugin
 author: PaperMC
 website: https://papermc.io
 api-version: 1.19
+commands:
+  oneplayersleep:
+    description: 重载插件配置
+    usage: /<command> reload 重载插件配置
+    aliases: [ops]
+    permission: ops.reload
+    permission-message: 你似乎没有执行该指令的权限
+permissions:
+  ops.reload:
+    description: 重载插件配置
+    default: op

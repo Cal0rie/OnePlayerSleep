@@ -1,5 +1,6 @@
 package ink.beibeil.testplugin;
 
+import ink.beibeil.testplugin.command.CommandReload;
 import ink.beibeil.testplugin.utils.HexCodeUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -18,6 +19,14 @@ public class ExamplePlugin extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
+        init();
+        getServer().getPluginManager().registerEvents(this, this);
+        getLogger().info("睡觉插件启动，Made by Cal0rie!");
+        this.getCommand("oneplayersleep").setExecutor(new CommandReload());
+    }
+
+    // 插件初始化
+    public void init() {
         // 创建并保存配置文件
         config.addDefault("enter-message-rewrite", false);
         config.addDefault("enabled", true);
@@ -37,9 +46,6 @@ public class ExamplePlugin extends JavaPlugin implements Listener {
 
         config.options().copyDefaults(true);
         saveConfig();
-
-        getServer().getPluginManager().registerEvents(this, this);
-        getLogger().info("睡觉插件启动，Made by Cal0rie!");
     }
 
     @EventHandler
@@ -115,4 +121,8 @@ public class ExamplePlugin extends JavaPlugin implements Listener {
         // 将该玩家移出 sleepingPlayers
 //        this.sleepingPlayers.remove(event.getPlayer());
     }
+
+//    public static ExamplePlugin getPlugin(Class<ExamplePlugin> clazz) {
+//        return getPlugin(clazz);
+//    }
 }
